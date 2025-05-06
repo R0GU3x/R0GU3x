@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>website</title>
+  <link rel="stylesheet" href="login.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+  <header>
+    <h1 class="logo">joe..</h1>
+    <nav>
+      <a href="#">home</a>
+      <a href="#">about</a>
+      <a href="#">service</a>
+      <a href="#">contact</a>
+    </nav>
+    <div class="icon">
+      <a href="#"><i class="fa-solid fa-cart-shopping"></i></a>
+      <a href="#"><i class="fa-solid fa-heart"></i></a>
+      <a href="#"><i class="fa-solid fa-bars"></i></a>
+      
+    </div>
+  </header>
+
+  <section class="Home">
+    <div class="content">
+      <h4>Hello, it's me</h4>
+      <h1><span>joe greyson</span> <br> frontend developer </h1>
+      <p>Lorem ipsum dolor sit amet consectetur <br>adipisicing elit.  Nihil sit corporis expedita!</p>
+
+       <div class="button">
+        <a href="#" class="btn1">let's talk</a>
+        <a href="#" class="btn2">portfolio</a>
+       </div>
+    </div>
+
+    <div class="social">
+      <a href="#"><i class="fa-brands fa-facebook"></i></a>
+      <a href="#"><i class="fa-brands fa-github"></i></a>
+      <a href="#"><i class="fa-brands fa-twitter"></i></a>
+      <a href="#"><i class="fa-brands fa-instagram"></i></a>
+    </div>
+  </section>
+  
+
+  <script>
+    let greth = ["propaganda" , "hamid" ,"ali" ,"mohamad" , "samir"];
+    let add = greth.reduce(function ( acc , curent , endex , arrey){
+      return acc.length > curent.length ? acc : curent;
+    })
+
+     console.log(add);
+
+     const test = "1 , 2, 3, EE , l , z , e , r , o , _ , W , e , b , _ , S , c , o, o , l, 2 , 0 , Z";
+
+        let ansory = test.split("").filter( function (element ){
+          return element !== "," ;
+        }).map(function ( lem){
+
+        
+          return isNaN(parseInt(lem)) ? lem : "";
+        })
+  console.log(ansory);
+  let txt = "eLzeRO";
+  const exs= txt.split("").map(function ( emeel){
+    return emeel === emeel.toUpperCase() ? emeel.toLowerCase() :emeel.toLowerCase();
+  }).join("")
+
+  
+  console.log(exs)
+  let number = [10 , -20 , 30 , -3 , -4]
+  let nu = number.map( chil => {return -chil})
+  console.log(nu)
+
+  const el = "elz1234er4o";
+  let oss = el.split("").map(function (elet){
+    return isNaN(parseInt(elet)) ? elet : "";
+  }).join("").toUpperCase0();
+  console.log(oss)
+  </script>
+</body>
+</html>
