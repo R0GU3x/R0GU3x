@@ -1,54 +1,83 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="icon" href="assets/finger-scanner.png" type="image/png">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Raman Biju | Cybersecurity Engineer</title>
+    <title>R0GU3 | Cybersecurity Engineer</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" type="assets/finger-scanner.png" href="favicon.png">
 </head>
 <body>
+    <!-- Scan Line Effects -->
+    <div class="scan-line"></div>
+    <div class="scan-line-horizontal"></div>
+    <div class="scan-grid"></div>
+    
+    <!-- Enhanced Scan Line Effects -->
+    <div class="scan-line-vertical"></div>
+    <div class="scan-grid-enhanced"></div>
+    <!-- <div class="scan-pulse"></div> -->
+    
+    <!-- Noise and Overlay Effects -->
     <div class="noise"></div>
     <div class="overlay"></div>
     
-    <div class="terminal-cursor"></div>
+    <!-- Terminal Cursor -->
+    <!-- <div class="terminal-cursor"></div> -->
     
-    <header>
-        <div class="logo">
-            <div class="logo-text">R0GU3</div>
-            <div class="status">
-                <span class="status-circle"></span>
-                <span class="status-text">ONLINE</span>
+    <!-- Hacking Loader -->
+    <div class="hack-overlay" id="hackOverlay">
+        <div class="hack-content">
+            <div class="hack-header">LOADING...</div>
+            <div class="hack-progress">
+                <div class="hack-progress-bar" id="hackProgressBar"></div>
             </div>
+            <div class="hack-text" id="hackText">Initializing...</div>
+            <div class="hack-percentage" id="hackPercentage">0% COMPLETE</div>
         </div>
-        <nav>
-            <div class="menu-toggle">
-                <div class="bar"></div>
-                <div class="bar"></div>
-                <div class="bar"></div>
+    </div>
+
+    <!-- Header -->
+    <header id="header">
+        <div class="container">
+            <div class="logo">
+                <div class="status">
+                    <span class="status-circle"></span>
+                    <!-- <span class="status-text">ONLINE</span> -->
+                </div>
+                <div class="logo-text">R0GU3</div>
             </div>
-            <ul class="nav-links">
-                <li><a href="#home" class="nav-link" data-text="HOME">HOME</a></li>
-                <li><a href="#about" class="nav-link" data-text="ABOUT">ABOUT</a></li>
-                <li><a href="#experience" class="nav-link" data-text="EXPERIENCE">EXPERIENCE</a></li>
-                <li><a href="#projects" class="nav-link" data-text="PROJECTS">PROJECTS</a></li>
-                <li><a href="#skills" class="nav-link" data-text="SKILLS">SKILLS</a></li>
-                <li><a href="#contact" class="nav-link" data-text="CONTACT">CONTACT</a></li>
-            </ul>
-        </nav>
+            <nav>
+                <div class="menu-toggle" id="menuToggle">
+                    <div class="bar"></div>
+                    <div class="bar"></div>
+                    <div class="bar"></div>
+                </div>
+                <ul class="nav-links" id="navLinks">
+                    <li><a href="#home" class="nav-link" data-text="HOME">HOME</a></li>
+                    <li><a href="#about" class="nav-link" data-text="ABOUT">ABOUT</a></li>
+                    <li><a href="#experience" class="nav-link" data-text="EXPERIENCE">EXPERIENCE</a></li>
+                    <li><a href="#projects" class="nav-link" data-text="PROJECTS">PROJECTS</a></li>
+                    <li><a href="#skills" class="nav-link" data-text="SKILLS">SKILLS</a></li>
+                    <li><a href="#contact" class="nav-link" data-text="CONTACT">CONTACT</a></li>
+                </ul>
+            </nav>
+        </div>
     </header>
 
     <main>
+        <!-- Hero Section -->
         <section id="home" class="hero">
+            
             <div class="container">
                 <div class="hero-content">
                     <div class="terminal">
                         <div class="terminal-header">
                             <div class="terminal-buttons">
-                                <span class="terminal-button"></span>
-                                <span class="terminal-button"></span>
-                                <span class="terminal-button"></span>
+                                <span class="terminal-button red"></span>
+                                <span class="terminal-button yellow"></span>
+                                <span class="terminal-button green"></span>
                             </div>
                             <div class="terminal-title">terminal@rogue:~</div>
                         </div>
@@ -56,20 +85,32 @@
                             <div class="line">
                                 <span class="prompt">$</span>
                                 <span class="command" id="typing-text"></span>
+                                <!-- <span class="cursor" id="terminal-cursor">|</span> -->
                             </div>
                             <div class="line response" id="response-text"></div>
                         </div>
                     </div>
+                    
                     <div class="hero-info">
-                        <h1 class="glitch" data-text="RAMAN BIJU">RAMAN BIJU</h1>
+                        <h1 class="glitch-enhanced" data-text="R0GU3 HACKER">R0GU3 HACKER</h1>
                         <div class="subtitle">CYBERSECURITY ENGINEER</div>
-                        <div class="location"><i class="fas fa-map-marker-alt"></i> Navi Mumbai, Maharashtra</div>
+                        <div class="location">
+                            <i class="fas fa-map-marker-alt"></i> 
+                            Navi Mumbai, Maharashtra
+                        </div>
                         <div class="social-links">
-                            <a href="mailto:ramanbijuomkar@gmail.com" class="social-link"><i class="fas fa-envelope"></i></a>
-                            <a href="tel:+916238685842" class="social-link"><i class="fas fa-phone"></i></a>
-                            <a href="https://www.linkedin.com/in/raman-biju" target="_blank" class="social-link"><i class="fab fa-linkedin"></i></a>
-                            <a href="https://github.com/R0GU3x" target="_blank" class="social-link"><i class="fab fa-github"></i></a>
-                            <a href="https://tryhackme.com/p/RoGUE" target="_blank" class="social-link"><i class="fas fa-hat-wizard"></i></a>
+                            <a href="mailto:contact@example.com" class="social-link clickable">
+                                <i class="fas fa-envelope"></i>
+                            </a>
+                            <a href="tel:+1234567890" class="social-link clickable">
+                                <i class="fas fa-phone"></i>
+                            </a>
+                            <a href="https://linkedin.com/in/username" class="social-link clickable">
+                                <i class="fab fa-linkedin"></i>
+                            </a>
+                            <a href="https://github.com/username" class="social-link clickable">
+                                <i class="fab fa-github"></i>
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -86,6 +127,7 @@
             </div>
         </section>
 
+        <!-- About Section -->
         <section id="about" class="about">
             <div class="container">
                 <div class="section-header">
@@ -93,7 +135,7 @@
                     <div class="section-subtitle">./whoami</div>
                 </div>
                 <div class="about-content">
-                    <div class="about-text" style="text-align: justify;"></div>
+                    <div class="about-text">
                         <p>As a cybersecurity professional with 
                             <span class="key-highlights">3+ years</span> 
                             of hands-on experience in penetration testing, training, and mentoring aspiring professionals, my primary goal is to serve my country by applying my skills to 
@@ -114,13 +156,22 @@
                             </div>
                         </div>
                     </div>
-                    <div class="matrix-container">
-                        <canvas id="matrix-canvas"></canvas>
+                    <div class="about-image">
+                        <div class="cyber-grid">
+                            <div class="grid-lines"></div>
+                            <div class="data-stream">
+                                <span>01001000</span>
+                                <span>01000001</span>
+                                <span>01000011</span>
+                                <span>01001011</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </section>
 
+        <!-- Experience Section -->
         <section id="experience" class="experience">
             <div class="container">
                 <div class="section-header">
@@ -129,9 +180,23 @@
                 </div>
                 <div class="timeline">
                     <div class="timeline-item">
-                        <div class="timeline-dot"></div>
+                        <!-- <div class="timeline-dot"></div> -->
+                        <div class="timeline-date">11/2024 - 05/2025</div>
+                        <div class="timeline-content clickable">
+                            <h3>Penetration Testing Intern</h3>
+                            <h4>GROOTT</h4>
+                            <ul>
+                                <li>Monitored and analyzed security alerts using SIEM tools to identify potential threats and anomalies in real-time.</li>
+                                <li>Assisted in triaging and escalating incidents based on severity and organizational impact.</li>
+                                <li>Conducted initial investigation of phishing attempts, malware alerts, and unauthorized access attempts.</li>
+                                <li>Documented incident response actions and contributed to daily security operations reporting and threat intelligence updates.</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <!-- <div class="timeline-dot"></div> -->
                         <div class="timeline-date">02/2024 - 10/2024</div>
-                        <div class="timeline-content">
+                        <div class="timeline-content clickable">
                             <h3>Security Research Engineer</h3>
                             <h4>CYSECURIX</h4>
                             <ul>
@@ -143,11 +208,11 @@
                         </div>
                     </div>
                     <div class="timeline-item">
-                        <div class="timeline-dot"></div>
+                        <!-- <div class="timeline-dot"></div> -->
                         <div class="timeline-date">06/2023 - 07/2024</div>
-                        <div class="timeline-content">
+                        <div class="timeline-content clickable">
                             <h3>Founder and Trainer</h3>
-                            <h4>INNOVWHIZ (Self-Employed)</h4>
+                            <h4>INNOVWHIZ</h4>
                             <ul>
                                 <li>Led the Education Community, offering comprehensive training on fundamental and core cybersecurity concepts.</li>
                                 <li>Delivered fully personalized notes covering over 80 key topics.</li>
@@ -160,97 +225,144 @@
             </div>
         </section>
 
+        <!-- Projects Section -->
         <section id="projects" class="projects">
             <div class="container">
                 <div class="section-header">
                     <h2 class="section-title">PROJECTS<span class="blink">_</span></h2>
                     <div class="section-subtitle">./my_builds</div>
                 </div>
-                <div class="projects-grid">
-                    <div class="project-card">
-                        <div class="project-header">
-                            <h3>Defense Sphere</h3>
-                            <div class="project-date">03/2025</div>
+                <!-- Top Projects -->
+                <div class="projects-top">
+                    <h3 class="section-title" style="font-size:1.5rem;margin-bottom:20px;">Top Projects</h3>
+                    <div class="projects-grid">
+                        <div class="project-card clickable">
+                            <div class="project-header">
+                                <h3>Defense Sphere</h3>
+                                <div class="project-date">03/2025</div>
+                            </div>
+                            <div class="project-subtitle">Insider Threat Protection Framework</div>
+                            <p>A comprehensive security framework designed to detect and mitigate insider threats through real-time file integrity monitoring, facial recognition authentication, and phishing content detection.</p>
+                            <div class="project-tech">
+                                <span>Python</span>
+                                <span>OpenCV</span>
+                                <span>Flask</span>
+                                <span>JavaScript</span>
+                                <span>Firewall</span>
+                            </div>
+                            <div class="project-links">
+                                <a href="https://github.com/R0GU3x/Defense-Sphere" class="project-link clickable">
+                                    <i class="fab fa-github"></i> GitHub
+                                </a>
+                            </div>
                         </div>
-                        <div class="project-subtitle">Insider Threat Protection Framework</div>
-                        <p>A comprehensive security framework designed to detect and mitigate insider threats through real-time file integrity monitoring, facial recognition authentication, and phishing content detection.</p>
+                        <div class="project-card clickable">
+                            <div class="project-header">
+                                <h3>C2C Malware Demo</h3>
+                                <div class="project-date">06/2023</div>
+                            </div>
+                            <div class="project-subtitle">Educational Remote Malware</div>
+                            <p>Developed a fully functional Command and Control (C2C) malware to demonstrate malware operations and illustrate the significant impact of infections for educational purposes.</p>
+                            <div class="project-tech">
+                                <span>Python</span>
+                                <span>Telegram API</span>
+                                <span>Cybersecurity</span>
+                            </div>
+                            <div class="project-links">
+                                <a href="https://github.com/R0GU3x/C2C-Malware-for-Windows-Demo-" class="project-link clickable">
+                                    <i class="fab fa-github"></i> GitHub
+                                </a>
+                            </div>
+                        </div>
+                        <div class="project-card clickable">
+                            <div class="project-header">
+                                <h3>Xylem Network Analyzer</h3>
+                                <div class="project-date">07/2024</div>
+                            </div>
+                            <div class="project-subtitle">ML-Based Network Monitoring System</div>
+                            <p>A sophisticated Network Analyzer designed to enhance security using advanced Machine Learning algorithms for anomaly detection and real-time insights into Network traffic and Potential threats.</p>
+                            <div class="project-tech">
+                                <span>Python</span>
+                                <span>MySQL</span>
+                                <span>Grafana</span>
+                                <span>Machine Learning</span>
+                            </div>
+                            <div class="project-links">
+                                <a href="https://github.com/R0GU3x/Network-Traffic-Analyzer" class="project-link clickable">
+                                    <i class="fab fa-github"></i> GitHub
+                                </a>
+                                <a href="https://www.youtube.com/watch?v=C0G3dnGQYAg" class="project-link clickable">
+                                    <i class="fab fa-youtube"></i> Demo
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Other Projects -->
+                <h3 class="section-title" style="font-size:1.5rem;margin:40px 0 20px 0;">Other Projects</h3>
+                <div class="projects-grid">
+                    <div class="project-card clickable">
+                        <div class="project-header">
+                            <h3>Icebox Firewall</h3>
+                            <div class="project-date">01/2025</div>
+                        </div>
+                        <div class="project-subtitle">Host-based Firewall Configuration System</div>
+                        <p>A host-based firewall capable of adding, removing, changing firewall rules of a Windows system, helping users to easily manage custom rules and monitor firewall behavior.</p>
                         <div class="project-tech">
                             <span>Python</span>
-                            <span>OpenCV</span>
-                            <span>Flask</span>
-                            <span>JavaScript</span>
+                            <span>Flet</span>
+                            <span>Web Application</span>
                             <span>Firewall</span>
                         </div>
                         <div class="project-links">
-                            <a href="https://github.com/R0GU3x/Defense-Sphere" class="project-link"><i class="fab fa-github"></i> GitHub</a>
+                            <a href="https://github.com/R0GU3x/Icebox" class="project-link clickable">
+                                <i class="fab fa-github"></i> GitHub
+                            </a>
                         </div>
                     </div>
-                    <div class="project-card">
-                        <div class="project-header">
-                            <h3>Xylem</h3>
-                            <div class="project-date">07/2024</div>
-                        </div>
-                        <div class="project-subtitle">Network Monitoring System based on ML</div>
-                        <p>A sophisticated Network Analyzer designed to enhance security using advanced Machine Learning algorithms for anomaly detection and real-time insights into Network traffic and Potential threats.</p>
-                        <div class="project-tech">
-                            <span>Python</span>
-                            <span>MySQL</span>
-                            <span>Grafana</span>
-                        </div>
-                        <div class="project-links">
-                            <a href="https://github.com/R0GU3x/Network-Traffic-Analyzer" class="project-link"><i class="fab fa-github"></i> GitHub</a>
-                            <a href="https://www.youtube.com/watch?v=C0G3dnGQYAg" class="project-link"><i class="fab fa-youtube"></i> YouTube</a>
-                        </div>
-                    </div>
-                    <div class="project-card">
-                        <div class="project-header">
-                            <h3>C2C Malware</h3>
-                            <div class="project-date">06/2023</div>
-                        </div>
-                        <div class="project-subtitle">Remote Malware</div>
-                        <p>Developed a fully functional Command and Control (C2C) malware to demonstrate malware operations and illustrate the significant impact of infections for educational purposes.</p>
-                        <div class="project-tech">
-                            <span>Python</span>
-                            <span>Telegram API</span>
-                            <span>Cybersecurity</span>
-                        </div>
-                        <div class="project-links">
-                            <a href="https://github.com/R0GU3x/C2C-Malware-for-Windows-Demo-" class="project-link"><i class="fab fa-github"></i> GitHub</a>
-                        </div>
-                    </div>
-                    <div class="project-card">
+                    <div class="project-card clickable">
                         <div class="project-header">
                             <h3>Back Me Up</h3>
                             <div class="project-date">10/2023</div>
                         </div>
-                        <div class="project-subtitle">Backup System</div>
-                        <p>A flutter-based application to manage your data backup and restore them in one click</p>
+                        <div class="project-subtitle">Automatic Backup System</div>
+                        <p>Developed a fully functional automatic backup system to securely back up user data and settings, ensuring data integrity and availability.</p>
                         <div class="project-tech">
                             <span>Python</span>
                             <span>Flet</span>
+                            <span>File Management</span>
+                            <span>Data Security</span>
                         </div>
                         <div class="project-links">
-                            <a href="https://github.com/R0GU3x/Back-Me-Up" class="project-link"><i class="fab fa-github"></i> GitHub</a>
+                            <a href="https://github.com/R0GU3x/Back-Me-Up" class="project-link clickable">
+                                <i class="fab fa-github"></i> GitHub
+                            </a>
                         </div>
                     </div>
-                    <div class="project-card">
+                    <div class="project-card clickable">
                         <div class="project-header">
-                            <h3>Icebox</h3>
-                            <div class="project-date">01/2024</div>
+                            <h3>Nexara</h3>
+                            <div class="project-date">10/2024</div>
                         </div>
-                        <div class="project-subtitle">Host-based Firewall Configuration System</div>
-                        <p>A host-based firewall capable of adding, removing, changing firewall rules of a Windows system, helping users to easily manage custom rules and monitor firewall behavior within a single platform.</p>
+                        <div class="project-subtitle">3D Solar System Web App for Near-Earth Objects</div>
+                        <p>Developed a fully functional 3D web application to visualize and track near-Earth objects, providing users with an interactive experience to learn about space.</p>
                         <div class="project-tech">
                             <span>Python</span>
-                            <span>Flet</span>
-                            <span>Web Applciation</span>
-                            <span>Firewall</span>
+                            <span>Flutter</span>
+                            <span>Education</span>
+                            <span>3D Visualization</span>
                         </div>
+                        <!-- <div class="project-links">
+                            <a href="https://github.com/R0GU3x/C2C-Malware-for-Windows-Demo-" class="project-link clickable">
+                                <i class="fab fa-github"></i> GitHub
+                            </a>
+                        </div> -->
                     </div>
                 </div>
             </div>
         </section>
 
+        <!-- Skills Section -->
         <section id="skills" class="skills">
             <div class="container">
                 <div class="section-header">
@@ -261,66 +373,72 @@
                     <div class="skills-category">
                         <h3>Technical Skills</h3>
                         <div class="skill-bars">
-                            <div class="skill-bar">
+                            <div class="skill-bar" data-skill="95">
                                 <div class="skill-name">Penetration Testing</div>
                                 <div class="skill-progress">
-                                    <div class="progress" style="width: 95%"></div>
+                                    <div class="progress"></div>
                                 </div>
+                                <div class="skill-percentage">95%</div>
                             </div>
-                            <div class="skill-bar">
+                            <div class="skill-bar" data-skill="90">
                                 <div class="skill-name">Web Application Security</div>
                                 <div class="skill-progress">
-                                    <div class="progress" style="width: 90%"></div>
+                                    <div class="progress"></div>
                                 </div>
+                                <div class="skill-percentage">90%</div>
                             </div>
-                            <div class="skill-bar">
+                            <div class="skill-bar" data-skill="85">
                                 <div class="skill-name">Python Programming</div>
                                 <div class="skill-progress">
-                                    <div class="progress" style="width: 85%"></div>
+                                    <div class="progress"></div>
                                 </div>
+                                <div class="skill-percentage">85%</div>
                             </div>
-                            <div class="skill-bar">
+                            <div class="skill-bar" data-skill="90">
                                 <div class="skill-name">Kali Linux</div>
                                 <div class="skill-progress">
-                                    <div class="progress" style="width: 90%"></div>
+                                    <div class="progress"></div>
                                 </div>
+                                <div class="skill-percentage">90%</div>
                             </div>
-                            <div class="skill-bar">
+                            <div class="skill-bar" data-skill="80">
                                 <div class="skill-name">Bash Scripting</div>
                                 <div class="skill-progress">
-                                    <div class="progress" style="width: 80%"></div>
+                                    <div class="progress"></div>
                                 </div>
+                                <div class="skill-percentage">80%</div>
                             </div>
-                            <div class="skill-bar">
-                                <div class="skill-name">SQL</div>
+                            <div class="skill-bar" data-skill="75">
+                                <div class="skill-name">SQL Injection</div>
                                 <div class="skill-progress">
-                                    <div class="progress" style="width: 75%"></div>
+                                    <div class="progress"></div>
                                 </div>
+                                <div class="skill-percentage">75%</div>
                             </div>
                         </div>
                     </div>
                     <div class="skills-category">
                         <h3>Soft Skills</h3>
                         <div class="skill-hexagons">
-                            <div class="skill-hexagon">
+                            <div class="skill-hexagon clickable">
                                 <div class="hexagon">
-                                    <i class="fas fa-chalkboard-teacher"></i>
+                                    <i class="fas fa-bullseye"></i>
                                 </div>
                                 <span>Presentation</span>
                             </div>
-                            <div class="skill-hexagon">
+                            <div class="skill-hexagon clickable">
                                 <div class="hexagon">
                                     <i class="fas fa-users"></i>
                                 </div>
                                 <span>Leadership</span>
                             </div>
-                            <div class="skill-hexagon">
+                            <div class="skill-hexagon clickable">
                                 <div class="hexagon">
                                     <i class="fas fa-comments"></i>
                                 </div>
                                 <span>Communication</span>
                             </div>
-                            <div class="skill-hexagon">
+                            <div class="skill-hexagon clickable">
                                 <div class="hexagon">
                                     <i class="fas fa-handshake"></i>
                                 </div>
@@ -329,9 +447,11 @@
                         </div>
                     </div>
                 </div>
+                
+                <!-- Achievement -->
                 <div class="achievements">
                     <h3>Achievements</h3>
-                    <div class="achievement-card">
+                    <div class="achievement-card clickable">
                         <div class="achievement-header">
                             <h4>Critical Vulnerability Discovery and Mitigation</h4>
                             <div class="achievement-date">05/2023</div>
@@ -349,16 +469,13 @@
                                 <span class="label">Impact:</span>
                                 <span class="value">Enhanced system integrity and safeguarding approximately $490,000 in potential revenue loss.</span>
                             </div>
-                            <div class="achievement-item">
-                                <span class="label">Outcome:</span>
-                                <span class="value">Implemented remediation strategies; bolstered website security, reducing vulnerability incidents by 40% and enhancing user data protection.</span>
-                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
+        <!-- Contact Section -->
         <section id="contact" class="contact">
             <div class="container">
                 <div class="section-header">
@@ -367,93 +484,91 @@
                 </div>
                 <div class="contact-content">
                     <div class="contact-info">
-                        <div class="contact-item">
+                        <div class="contact-item clickable">
                             <i class="fas fa-envelope"></i>
                             <div>
                                 <h3>Email</h3>
-                                <a href="mailto:ramanbijuomkar@gmail.com">ramanbijuomkar@gmail.com</a>
+                                <a href="mailto:contact@example.com">contact@example.com</a>
                             </div>
                         </div>
-                        <div class="contact-item">
+                        <div class="contact-item clickable">
                             <i class="fas fa-phone"></i>
                             <div>
                                 <h3>Phone</h3>
-                                <a href="tel:+916238685842">+91 6238685842</a>
+                                <a href="tel:+1234567890">+1 (234) 567-890</a>
                             </div>
                         </div>
-                        <div class="contact-item">
+                        <div class="contact-item clickable">
                             <i class="fas fa-map-marker-alt"></i>
                             <div>
                                 <h3>Location</h3>
                                 <p>Navi Mumbai, Maharashtra, India</p>
                             </div>
                         </div>
-                        <div class="contact-item">
+                        <div class="contact-item clickable">
                             <i class="fab fa-linkedin"></i>
                             <div>
                                 <h3>LinkedIn</h3>
-                                <a href="https://www.linkedin.com/in/raman-biju" target="_blank">linkedin.com/in/raman-biju</a>
+                                <a href="https://linkedin.com/in/username">linkedin.com/in/username</a>
                             </div>
                         </div>
                     </div>
-                    <!-- <div class="contact-form">
-                        <div class="form-header">
-                            <div class="form-title">Send a Message</div>
-                            <div class="form-subtitle">I'll get back to you as soon as possible</div>
+                    <div class="system-status">
+                        <div class="status-header">SYSTEM STATUS</div>
+                        <div class="status-grid">
+                            <div class="status-item">
+                                <span>Security Level:</span>
+                                <span class="status-value">MAXIMUM</span>
+                            </div>
+                            <div class="status-item">
+                                <span>Firewall:</span>
+                                <span class="status-value">ACTIVE</span>
+                            </div>
+                            <div class="status-item">
+                                <span>Encryption:</span>
+                                <span class="status-value">AES-256</span>
+                            </div>
+                            <div class="status-item">
+                                <span>Status:</span>
+                                <span class="status-value blink">ONLINE</span>
+                            </div>
                         </div>
-                        <form id="contact-form">
-                            <div class="form-group">
-                                <label for="name">Name</label>
-                                <input type="text" id="name" name="name" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="email">Email</label>
-                                <input type="email" id="email" name="email" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="subject">Subject</label>
-                                <input type="text" id="subject" name="subject" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="message">Message</label>
-                                <textarea id="message" name="message" rows="5" required></textarea>
-                            </div>
-                            <button type="submit" class="submit-btn">
-                                <span class="btn-text">SEND MESSAGE</span>
-                                <span class="btn-icon"><i class="fas fa-paper-plane"></i></span>
-                            </button>
-                        </form>
-                    </div> -->
+                    </div>
                 </div>
             </div>
         </section>
     </main>
 
+    <!-- Footer -->
     <footer>
         <div class="container">
             <div class="footer-content">
                 <div class="footer-logo">R0GU3</div>
                 <div class="footer-text">
-                    <p>&copy; 2025 Raman Biju. All rights reserved.</p>
-                    <p>Cybersecurity Engineer | Penetration Tester | Bug Hunter</p>
+                    <p>&copy; 2025 Cybersecurity Engineer. All rights reserved.</p>
+                    <p>Penetration Tester | Bug Hunter | Exploit Developer</p>
                 </div>
                 <div class="footer-social">
-                    <a href="mailto:ramanbijuomkar@gmail.com" class="social-link"><i class="fas fa-envelope"></i></a>
-                    <a href="https://www.linkedin.com/in/raman-biju" target="_blank" class="social-link"><i class="fab fa-linkedin"></i></a>
-                    <a href="#" target="_blank" class="social-link"><i class="fab fa-github"></i></a>
+                    <a href="mailto:contact@example.com" class="social-link clickable">
+                        <i class="fas fa-envelope"></i>
+                    </a>
+                    <a href="https://linkedin.com/in/username" class="social-link clickable">
+                        <i class="fab fa-linkedin"></i>
+                    </a>
+                    <a href="https://github.com/username" class="social-link clickable">
+                        <i class="fab fa-github"></i>
+                    </a>
                 </div>
             </div>
         </div>
     </footer>
 
-    <div class="hack-overlay">
-        <div class="hack-content">
-            <div class="hack-header">Loading..</div>
-            <div class="hack-progress">
-                <div class="hack-progress-bar"></div>
-            </div>
-            <div class="hack-text"></div>
-        </div>
+    <!-- Audio Controls -->
+    <div class="audio-controls">
+        <button id="audioToggle" class="audio-btn clickable" title="Toggle Audio">
+            <i class="fas fa-volume-up" id="audioIcon"></i>
+            <span class="audio-status" id="audioStatus">ON</span>
+        </button>
     </div>
 
     <script src="script.js"></script>

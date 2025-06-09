@@ -1,11 +1,253 @@
+// Enhanced Audio Context for comprehensive sound effects
+class EnhancedAudioManager {
+  constructor() {
+    this.audioContext = null
+    this.isMuted = false
+    this.isInitialized = false
+    this.masterGain = null
+    this.soundEffects = new Map()
+  }
+
+  async initAudio() {
+    try {
+      // Create audio context on user interaction
+      if (!this.audioContext) {
+        this.audioContext = new (window.AudioContext || window.webkitAudioContext)()
+      }
+      // Resume context if suspended (browser auto-play policy)
+      if (this.audioContext.state === "suspended") {
+        await this.audioContext.resume()
+      }
+
+      // Create master gain node
+      this.masterGain = this.audioContext.createGain()
+      this.masterGain.connect(this.audioContext.destination)
+      this.masterGain.gain.setValueAtTime(0.3, this.audioContext.currentTime)
+
+      this.isInitialized = true
+      console.log("Enhanced Audio initialized successfully")
+
+      // Initialize sound effects
+      this.initializeSoundEffects()
+
+      return true
+    } catch (error) {
+      console.log("Audio initialization failed:", error)
+      return false
+    }
+  }
+
+  initializeSoundEffects() {
+    // Pre-create sound effect configurations
+    this.soundEffects.set("click", {
+      frequency: 800,
+      type: "square",
+      duration: 0.1,
+      volume: 0.1,
+    })
+
+    this.soundEffects.set("hover", {
+      frequency: 1200,
+      type: "sine",
+      duration: 0.05,
+      volume: 0.05,
+    })
+
+    this.soundEffects.set("typing", {
+      frequency: () => 2000 + Math.random() * 500,
+      type: "square",
+      duration: 0.02,
+      volume: 0.03,
+    })
+
+    this.soundEffects.set("scan", {
+      frequency: 440,
+      type: "sawtooth",
+      duration: 0.3,
+      volume: 0.02,
+    })
+
+    this.soundEffects.set("glitch", {
+      frequency: () => 100 + Math.random() * 1000,
+      type: "square",
+      duration: 0.1,
+      volume: 0.04,
+    })
+
+    this.soundEffects.set("notification", {
+      frequency: 880,
+      type: "sine",
+      duration: 0.2,
+      volume: 0.06,
+    })
+  }
+
+  async playSound(soundType, customConfig = {}) {
+    if (!this.audioContext || this.isMuted) return
+
+    // Always try to resume context before playing
+    if (this.audioContext.state === "suspended") {
+      try { await this.audioContext.resume() } catch (e) {}
+    }
+
+    const config = { ...this.soundEffects.get(soundType), ...customConfig }
+    if (!config) return
+
+    try {
+      const oscillator = this.audioContext.createOscillator()
+      const gainNode = this.audioContext.createGain()
+      const filter = this.audioContext.createBiquadFilter()
+
+      oscillator.connect(filter)
+      filter.connect(gainNode)
+      gainNode.connect(this.masterGain)
+
+      const frequency = typeof config.frequency === "function" ? config.frequency() : config.frequency
+      oscillator.frequency.setValueAtTime(frequency, this.audioContext.currentTime)
+      oscillator.type = config.type
+
+      filter.type = "lowpass"
+      filter.frequency.setValueAtTime(frequency * 2, this.audioContext.currentTime)
+
+      gainNode.gain.setValueAtTime(config.volume, this.audioContext.currentTime)
+      gainNode.gain.exponentialRampToValueAtTime(0.001, this.audioContext.currentTime + config.duration)
+
+      oscillator.start(this.audioContext.currentTime)
+      oscillator.stop(this.audioContext.currentTime + config.duration)
+    } catch (error) {
+      console.log(`${soundType} sound failed:`, error)
+    }
+  }
+
+  playClickSound() {
+    this.playSound("click")
+  }
+
+  playHoverSound() {
+    this.playSound("hover")
+  }
+
+  playTypingSound() {
+    this.playSound("typing")
+  }
+
+  playScanSound() {
+    this.playSound("scan")
+  }
+
+  playGlitchSound() {
+    this.playSound("glitch")
+  }
+
+  playNotificationSound() {
+    this.playSound("notification")
+  }
+
+  toggleMute() {
+    this.isMuted = !this.isMuted
+
+    if (this.masterGain) {
+      this.masterGain.gain.setValueAtTime(this.isMuted ? 0 : 0.3, this.audioContext.currentTime)
+    }
+
+    console.log("Audio", this.isMuted ? "muted" : "unmuted")
+    return this.isMuted
+  }
+
+  // Add visual feedback for audio
+  showAudioFeedback(type) {
+    const feedback = document.createElement("div")
+    feedback.className = "audio-feedback"
+    feedback.textContent = type.toUpperCase()
+    feedback.style.cssText = `
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: rgba(0, 255, 0, 0.9);
+      color: black;
+      padding: 10px 20px;
+      border-radius: 5px;
+      font-family: monospace;
+      font-weight: bold;
+      z-index: 10000;
+      pointer-events: none;
+      animation: audioFeedback 1s ease;
+    `
+
+    document.body.appendChild(feedback)
+    setTimeout(() => feedback.remove(), 1000)
+  }
+}
+
+// Replace the old audioManager with enhanced version
+const audioManager = new EnhancedAudioManager()
+
+// Add CSS for audio feedback animation
+const audioFeedbackStyle = document.createElement("style")
+audioFeedbackStyle.textContent = `
+  @keyframes audioFeedback {
+    0% { opacity: 0; transform: translate(-50%, -50%) scale(0.5); }
+    50% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+    100% { opacity: 0; transform: translate(-50%, -50%) scale(0.5); }
+  }
+`
+document.head.appendChild(audioFeedbackStyle)
+
+// Enhanced scanning effects
+function initializeScanningEffects() {
+  // Random scan sound effects
+  setInterval(() => {
+    if (Math.random() > 0.95) {
+      audioManager.playScanSound()
+    }
+  }, 2000)
+
+  // Random glitch effects with sound
+  setInterval(() => {
+    if (Math.random() > 0.98) {
+      const glitchElements = document.querySelectorAll(".glitch-enhanced, .glitch")
+      if (glitchElements.length > 0) {
+        const randomElement = glitchElements[Math.floor(Math.random() * glitchElements.length)]
+        randomElement.style.animation = "none"
+        void randomElement.offsetWidth // Trigger reflow
+        randomElement.style.animation = "glitch-anim 0.3s ease-in-out"
+        audioManager.playGlitchSound()
+
+        setTimeout(() => {
+          randomElement.style.animation = ""
+        }, 300)
+      }
+    }
+  }, 3000)
+
+  // Notification sound for section changes
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting && entry.target.tagName === "SECTION") {
+          audioManager.playNotificationSound()
+        }
+      })
+    },
+    { threshold: 0.5 },
+  )
+
+  document.querySelectorAll("section").forEach((section) => {
+    observer.observe(section)
+  })
+}
+
 // Terminal typing effect
 document.addEventListener("DOMContentLoaded", () => {
   const typingText = document.getElementById("typing-text")
   const responseText = document.getElementById("response-text")
+  // const terminalCursor = document.getElementById("terminal-cursor")
+
   const commands = ["whoami", "cat profile.txt", "ls -la projects/", "sudo access --grant-all"]
   const responses = [
     "rogue@cybersecurity:~$",
-    "Penetration Tester | Bug Hunter | Exploit Developer | Python Prorgammer | Top 1% in TryHackme | CTF Player",
+    "Penetration Tester | Bug Hunter | Exploit Developer | Python Programmer | Top 1% in TryHackMe | CTF Player",
     "Defense-Sphere.py  Xylem-Network.py  C2C-Malware.py  Password-Manager.py  Ransomware.py",
     "Access granted. Welcome to my portfolio.",
   ]
@@ -20,6 +262,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (isTyping && commandIndex < commands.length) {
       if (charIndex < commands[commandIndex].length) {
         typingText.textContent += commands[commandIndex].charAt(charIndex)
+        audioManager.playTypingSound()
         charIndex++
         setTimeout(typeText, Math.random() * 100 + 50)
       } else {
@@ -35,7 +278,6 @@ document.addEventListener("DOMContentLoaded", () => {
       responseText.textContent = responses[responseIndex]
       responseIndex++
 
-      // Reset for next command
       setTimeout(() => {
         typingText.textContent = ""
         responseText.textContent = ""
@@ -47,7 +289,6 @@ document.addEventListener("DOMContentLoaded", () => {
         if (commandIndex < commands.length) {
           setTimeout(typeText, 500)
         } else {
-          // All commands completed, show final message
           setTimeout(() => {
             document.querySelector(".terminal-body").innerHTML += `
                             <div class="line">
@@ -63,62 +304,16 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // Start the typing animation
-  setTimeout(typeText, 1000)
-
-  // Matrix effect
-  const canvas = document.getElementById("matrix-canvas")
-  const ctx = canvas.getContext("2d")
-
-  // Make canvas full size of container
-  function resizeCanvas() {
-    const container = document.querySelector(".matrix-container")
-    if (container) {
-      canvas.width = container.offsetWidth
-      canvas.height = container.offsetHeight
-    }
-  }
-
-  window.addEventListener("resize", resizeCanvas)
-  resizeCanvas()
-
-  // Matrix rain effect
-  const chars = "01アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン"
-  const fontSize = 14
-  const columns = canvas.width / fontSize
-  const drops = []
-
-  for (let i = 0; i < columns; i++) {
-    drops[i] = Math.floor((Math.random() * canvas.height) / fontSize)
-  }
-
-  function drawMatrix() {
-    ctx.fillStyle = "rgba(0, 0, 0, 0.05)"
-    ctx.fillRect(0, 0, canvas.width, canvas.height)
-
-    ctx.fillStyle = "#0f0"
-    ctx.font = fontSize + "px monospace"
-
-    for (let i = 0; i < drops.length; i++) {
-      const text = chars.charAt(Math.floor(Math.random() * chars.length))
-      ctx.fillText(text, i * fontSize, drops[i] * fontSize)
-
-      if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
-        drops[i] = 0
-      }
-
-      drops[i]++
-    }
-  }
-
-  setInterval(drawMatrix, 50)
+  setTimeout(typeText, 2000)
 
   // Mobile menu toggle
-  const menuToggle = document.querySelector(".menu-toggle")
-  const navLinks = document.querySelector(".nav-links")
+  const menuToggle = document.getElementById("menuToggle")
+  const navLinks = document.getElementById("navLinks")
 
   menuToggle.addEventListener("click", function () {
     this.classList.toggle("active")
     navLinks.classList.toggle("active")
+    audioManager.playClickSound()
   })
 
   // Close mobile menu when clicking a link
@@ -126,6 +321,7 @@ document.addEventListener("DOMContentLoaded", () => {
     link.addEventListener("click", () => {
       menuToggle.classList.remove("active")
       navLinks.classList.remove("active")
+      audioManager.playClickSound()
     })
   })
 
@@ -144,30 +340,110 @@ document.addEventListener("DOMContentLoaded", () => {
   })
 
   // Hacking animation on page load
-  const hackOverlay = document.querySelector(".hack-overlay")
-  const hackText = document.querySelector(".hack-text")
-  const hackProgressBar = document.querySelector(".hack-progress-bar")
+  const hackOverlay = document.getElementById("hackOverlay")
+  const hackText = document.getElementById("hackText")
+  const hackProgressBar = document.getElementById("hackProgressBar")
+  const hackPercentage = document.getElementById("hackPercentage")
+
+  const loadingTexts = [
+    "Initializing...",
+    "Decrypting portfolio data...",
+    "Bypassing security protocols...",
+    "Access granted. Loading interface...",
+  ]
 
   function showHackingAnimation() {
-    hackOverlay.style.display = "flex"
-    hackText.textContent = "Decrypting portfolio data..."
-    hackProgressBar.style.transition = "width 1s linear"
-    hackProgressBar.style.width = "0"
-    setTimeout(() => {
-      hackProgressBar.style.transition = "width 2s linear"
-      hackProgressBar.style.width = "100%"
-    }, 10)
+    let progress = 0
+    let textIndex = 0
 
-    setTimeout(() => {
-      hackOverlay.style.opacity = "0"
-      setTimeout(() => {
-        hackOverlay.style.display = "none"
-      }, 500)
-    }, 3000)
+    const progressInterval = setInterval(() => {
+      progress += Math.random() * 15
+
+      if (progress >= 25 && textIndex === 0) {
+        hackText.textContent = loadingTexts[1]
+        textIndex = 1
+      } else if (progress >= 50 && textIndex === 1) {
+        hackText.textContent = loadingTexts[2]
+        textIndex = 2
+      } else if (progress >= 75 && textIndex === 2) {
+        hackText.textContent = loadingTexts[3]
+        textIndex = 3
+      }
+
+      progress = Math.min(progress, 100)
+      hackProgressBar.style.width = progress + "%"
+      hackPercentage.textContent = Math.floor(progress) + "% COMPLETE"
+
+      if (progress >= 100) {
+        clearInterval(progressInterval)
+        setTimeout(async () => {
+          hackOverlay.classList.add("hidden")
+          // Ensure audio is initialized
+          if (!audioManager.isInitialized) {
+            await audioManager.initAudio()
+          }
+        }, 500)
+      }
+    }, 100)
   }
 
   // Show hacking animation on page load
-  setTimeout(showHackingAnimation, 0)
+  setTimeout(showHackingAnimation, 500)
+
+  // Audio controls
+  const audioToggle = document.getElementById("audioToggle")
+  const audioIcon = document.getElementById("audioIcon")
+  const audioStatus = document.getElementById("audioStatus")
+
+  audioToggle.addEventListener("click", async () => {
+    // Initialize audio on first click
+    if (!audioManager.isInitialized) {
+      const success = await audioManager.initAudio()
+      if (!success) {
+        alert("Audio initialization failed. Please check your browser settings.")
+        return
+      }
+    }
+
+    const isMuted = audioManager.toggleMute()
+    audioIcon.className = isMuted ? "fas fa-volume-mute" : "fas fa-volume-up"
+    audioStatus.textContent = isMuted ? "OFF" : "ON"
+    audioToggle.classList.toggle("muted", isMuted)
+
+    // Play click sound to test
+    if (!isMuted) {
+      setTimeout(() => audioManager.playClickSound(), 100)
+    }
+  })
+
+  // Initialize scanning effects
+  initializeScanningEffects()
+
+  // Enhanced audio initialization
+  const initAudioOnInteraction = async () => {
+    if (!audioManager.isInitialized) {
+      const success = await audioManager.initAudio()
+      if (success) {
+        audioManager.showAudioFeedback("AUDIO READY")
+      }
+    }
+  }
+
+  // Multiple ways to initialize audio
+  document.addEventListener("click", initAudioOnInteraction, { once: true })
+  document.addEventListener("keydown", initAudioOnInteraction, { once: true })
+  document.addEventListener("touchstart", initAudioOnInteraction, { once: true })
+  document.addEventListener("mousemove", initAudioOnInteraction, { once: true })
+
+  // Add click and hover sound effects
+  document.querySelectorAll(".clickable").forEach((element) => {
+    element.addEventListener("click", async () => {
+      await audioManager.playClickSound()
+    })
+    element.addEventListener("mouseenter", async () => {
+      await audioManager.playHoverSound()
+    })
+  })
 
   // Glitch effect on hover for project cards
   const projectCards = document.querySelectorAll(".project-card")
@@ -181,34 +457,6 @@ document.addEventListener("DOMContentLoaded", () => {
     })
   })
 
-  // Form submission
-  const contactForm = document.getElementById("contact-form")
-
-  if (contactForm) {
-    contactForm.addEventListener("submit", function (e) {
-      e.preventDefault()
-
-      // Simulate form submission
-      const submitBtn = this.querySelector(".submit-btn")
-      const originalText = submitBtn.innerHTML
-
-      submitBtn.innerHTML = '<span class="btn-text">SENDING...</span>'
-      submitBtn.disabled = true
-
-      setTimeout(() => {
-        submitBtn.innerHTML =
-          '<span class="btn-text">MESSAGE SENT</span><span class="btn-icon"><i class="fas fa-check"></i></span>'
-
-        // Reset form
-        setTimeout(() => {
-          contactForm.reset()
-          submitBtn.innerHTML = originalText
-          submitBtn.disabled = false
-        }, 3000)
-      }, 2000)
-    })
-  }
-
   // Intersection Observer for animations
   const observerOptions = {
     threshold: 0.1,
@@ -219,6 +467,16 @@ document.addEventListener("DOMContentLoaded", () => {
     entries.forEach((entry) => {
       if (entry.isIntersecting) {
         entry.target.classList.add("in-view")
+
+        // Animate skill bars
+        if (entry.target.classList.contains("skill-bar")) {
+          const progress = entry.target.querySelector(".progress")
+          const skillLevel = entry.target.getAttribute("data-skill")
+          setTimeout(() => {
+            progress.style.width = skillLevel + "%"
+          }, 200)
+        }
+
         observer.unobserve(entry.target)
       }
     })
@@ -248,10 +506,12 @@ document.addEventListener("DOMContentLoaded", () => {
   })
 
   // Terminal cursor blinking
-  const terminalCursor = document.querySelector(".terminal-cursor")
-  setInterval(() => {
-    terminalCursor.style.opacity = terminalCursor.style.opacity === "0" ? "1" : "0"
-  }, 500)
+  // const terminalCursorElement = document.querySelector(".terminal-cursor")
+  // setInterval(() => {
+  //   if (terminalCursorElement) {
+  //     terminalCursorElement.style.opacity = terminalCursorElement.style.opacity === "0" ? "1" : "0"
+  //   }
+  // }, 500)
 
   // Random glitch effect on elements with .glitch class
   function randomGlitch() {
@@ -271,19 +531,28 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Mouse follow effect for terminal cursor
   document.addEventListener("mousemove", (e) => {
-    if (Math.random() > 0.95) {
-      terminalCursor.style.left = e.clientX + "px"
-      terminalCursor.style.top = e.clientY + "px"
-      terminalCursor.style.opacity = "1"
+    if (Math.random() > 0.98) {
+      terminalCursorElement.style.left = e.clientX + "px"
+      terminalCursorElement.style.top = e.clientY + "px"
+      terminalCursorElement.style.opacity = "1"
 
       setTimeout(() => {
-        terminalCursor.style.opacity = "0"
+        terminalCursorElement.style.opacity = "0"
       }, 500)
     }
   })
 
   // Add glitch effect to sections on scroll
   window.addEventListener("scroll", () => {
+    // Update header background on scroll
+    const header = document.getElementById("header")
+    if (window.scrollY > 10) {
+      header.classList.add("scrolled")
+    } else {
+      header.classList.remove("scrolled")
+    }
+
+    // Random glitch effect on scroll
     if (Math.random() > 0.95) {
       const sections = document.querySelectorAll("section")
       const randomSection = sections[Math.floor(Math.random() * sections.length)]
@@ -295,24 +564,49 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   })
 
-  // Set skill bar widths after they're in view
-  document.querySelectorAll(".skill-bar").forEach((bar) => {
-    const progress = bar.querySelector(".progress")
-    const width = progress.style.width
-    progress.style.width = "0"
+  // Keyboard shortcuts
+  document.addEventListener("keydown", (e) => {
+    // Ctrl + M to toggle audio
+    if (e.ctrlKey && e.key === "m") {
+      e.preventDefault()
+      audioToggle.click()
+    }
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            progress.style.width = width
-            observer.unobserve(entry.target)
-          }
-        })
-      },
-      { threshold: 0.5 },
-    )
-
-    observer.observe(bar)
+    // Escape to close mobile menu
+    if (e.key === "Escape") {
+      menuToggle.classList.remove("active")
+      navLinks.classList.remove("active")
+    }
   })
+
+  // Add typing sound to terminal cursor
+  setInterval(() => {
+    if (terminalCursor && terminalCursor.style.opacity === "1") {
+      if (Math.random() > 0.7) {
+        audioManager.playTypingSound()
+      }
+    }
+  }, 200)
+
+  console.log(`
+    ██████╗  ██████╗  ██████╗ ██╗   ██╗███████╗
+    ██╔══██╗██╔═══██╗██╔════╝ ██║   ██║██╔════╝
+    ██████╔╝██║   ██║██║  ███╗██║   ██║█████╗  
+    ██╔══██╗██║   ██║██║   ██║██║   ██║██╔══╝  
+    ██║  ██║╚██████╔╝╚██████╔╝╚██████╔╝███████╗
+    ╚═╝  ╚═╝ ╚═════╝  ╚═════╝  ╚═════╝ ╚══════╝
+    
+    Welcome to R0GU3's Cybersecurity Portfolio
+    System Status: ONLINE
+    Security Level: MAXIMUM
+    `)
+
+  // Debug: Log scan line visibility
+  setTimeout(() => {
+    const scanLine = document.querySelector('.scan-line')
+    if (scanLine) {
+      const rect = scanLine.getBoundingClientRect()
+      console.log('Scan line position:', rect)
+    }
+  }, 2000)
 })
